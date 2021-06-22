@@ -4,13 +4,14 @@ import 'package:personal_expenses_app/models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction>? transactions;
+  final Function deleteTx;
 
-  const TransactionList({Key? key, @required this.transactions}) : super(key: key);
+  const TransactionList({Key? key, required this.transactions, required this.deleteTx}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300.0,
+      height: 400.0,
       child: transactions!.isEmpty?Column(children: [
         Text("No Transaction added yet!",
           style: Theme.of(context).textTheme.headline6,
@@ -46,38 +47,12 @@ class TransactionList extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
+              trailing: IconButton(
+                icon: Icon(Icons.delete, color: Theme.of(context).errorColor,),
+                onPressed: () => deleteTx(transactions![index].id),
+              ),
             ),
           );
-            // Card(child: Row(
-            //   children: [
-            //     Container(
-            //         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            //         decoration: BoxDecoration(
-            //           border: Border.all(
-            //               color: Theme.of(context).primaryColor,
-            //               width: 2.0
-            //           ),
-            //         ),
-            //         padding: const EdgeInsets.all(10.0),
-            //         child: Text(
-            //           "₹${transactions![index].amount!.toStringAsFixed(2)}",
-            //           style: TextStyle(
-            //             fontWeight: FontWeight.bold,
-            //             fontSize: 20.0,
-            //             color: Theme.of(context).primaryColor,
-            //           ),
-            //         )
-            //     ),
-            //     Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Text(
-            //
-            //         ),
-            //
-            //       ],)
-            //   ],
-            // ),);
         },
     ),);
   }
