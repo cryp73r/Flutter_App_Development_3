@@ -17,9 +17,18 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(),
       theme: ThemeData(
         primarySwatch: Colors.purple,
-        colorScheme: ColorScheme.fromSwatch(accentColor: Colors.amber),
+        colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.amber,
+        ),
         fontFamily: 'Quicksand',
-        textTheme: ThemeData.light().textTheme.copyWith(headline6: const TextStyle(fontFamily: 'OpenSans', fontSize: 18.0, fontWeight: FontWeight.bold)),
+        textTheme: ThemeData.light().textTheme.copyWith(
+          headline6: const TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold),
+          button: const TextStyle(color: Colors.white),
+        ),
         appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(headline6: const TextStyle(fontFamily: 'OpenSans', fontSize: 20.0))),
       ),
     );
