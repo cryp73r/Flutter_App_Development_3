@@ -3,8 +3,8 @@
 Payment Integration using CashFree Gateway.
 
 ## Note
-Payment using UPI is working and will show SUCCESS or FAILED or CANCELLED STATUS once you proceed.
-Payment using Web need some params like APP_ID, TOKEN_DATA, ORDER_ID, for working. But still if you click on DO WEB PAYMENT,
+- Payment using UPI is working and will show SUCCESS or FAILED or CANCELLED STATUS once you proceed.
+- Payment using Web need some params like APP_ID, TOKEN_DATA, ORDER_ID, for working. But still if you click on DO WEB PAYMENT,
 it will open CashFree Payment Gateway Page in app itself but will show error that APP_ID invalid.
 
 ## Getting Started
