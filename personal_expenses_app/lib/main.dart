@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:personal_expenses_app/models/transaction.dart';
 import 'package:personal_expenses_app/widgets/chart.dart';
 import 'package:personal_expenses_app/widgets/new_transaction.dart';
 import 'package:personal_expenses_app/widgets/transaction_list.dart';
 
 void main() {
-  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -102,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text("Personal Expenses"),
       actions: [
@@ -111,34 +110,39 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+    final txListWidget = SizedBox(
+        height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+        child: TransactionList(transactions: _userTransactions, deleteTx: _deleteTransaction,)
+    );
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Show Chart"),
-                Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    }
-                ),
-              ],
+            if (isLandscape) Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Show Chart"),
+                  Switch(
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      }
+                  ),
+                ],
+              ),
+            if (!isLandscape) SizedBox(
+                height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
+                child: Chart(recentTransactions: _recentTransactions)
             ),
-            _showChart?SizedBox(
+            if (!isLandscape) txListWidget,
+            if (isLandscape) _showChart?SizedBox(
               height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
                 child: Chart(recentTransactions: _recentTransactions)
-            ):
-            SizedBox(
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
-                child: TransactionList(transactions: _userTransactions, deleteTx: _deleteTransaction,)
-            ),
+            ):txListWidget,
           ],
         ),
       ),
